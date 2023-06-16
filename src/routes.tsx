@@ -3,8 +3,9 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import { Home } from './pages/Home/Home'
 import Sidebar from './components/Sidebar/Sidebar'
 import { Players } from './pages/Players/Players'
-import { Games } from './pages/Games/Games'
 import { Divider } from '@mui/material'
+import { Games } from './pages/Games/Games'
+import { Teams } from './pages/Teams/Teams'
 
 const AppRouter = () => {
   return (
@@ -17,6 +18,7 @@ const AppRouter = () => {
           <Route path="/" element={<Home />} />
           <Route path="/players" element={<Players />} />
           <Route path="/games" element={<Games />} />
+          <Route path="/teams" element={<Teams />} />
         </Routes>
       </div>
     </Router>

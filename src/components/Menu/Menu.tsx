@@ -12,9 +12,12 @@ export const MenuOptions = () => {
       <span style={{ fontSize: '14px' }}>Seu guia de resultados</span>
       <Divider style={{ margin: '12px' }} />
       <ul style={{ display: 'flex', flexDirection: 'column', padding: '0'  }}>
-        <Link href="#" onClick={() => navigate('/players')}>Jogadores</Link>
-        <Link href="#" onClick={() => navigate('/games')}>Jogos</Link>
+        <Link  component="button" variant='button' underline="none" color="inherit" href="#" onClick={() => navigate('/players')}>Jogadores</Link>
+        <Link component="button" variant='button' underline="none" color="inherit" href="#" onClick={() => navigate('/teams')}>Times</Link>
+        <Link component="button" variant='button' underline="none" color="inherit" href="#" onClick={() => navigate('/games')}>Jogos</Link>
       </ul>
+
+
     </div>
   )
 }

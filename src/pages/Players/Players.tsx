@@ -1,24 +1,11 @@
 //TODO ajustar pathbase
-import { CircularProgress, Backdrop, ListItem, ListItemText, Pagination } from '@mui/material'
+import { CircularProgress, Backdrop, ListItem, ListItemText } from '@mui/material'
 
-import { useQuery } from 'react-query'
-import { fetchPLayers } from '../../api';
-
-
-type PlayersProps = {
-  first_name: string;
-  id: number;
-  last_name: string;
-  total_page: string;
-}
+import { usePlayers } from '../../hooks/usePlayers/usePlayers';
 
 export const Players = () => {
 
-  const { data, isLoading } = useQuery<PlayersProps[] | any>(['players'], () => fetchPLayers())
-
-  const result = data?.data
-  const meta = data?.meta
-  console.log(meta);
+  const { data, isLoading } = usePlayers() 
 
   if (isLoading) {
     return (
@@ -35,7 +22,7 @@ export const Players = () => {
     <div style={{ display: 'flex' }}>
 
       <ul style={{ display: 'flex', flexDirection: 'column' }}>
-        {result?.map((players, id) => {
+        {data?.data?.map((players, id) => {
           return (
             <>
               <ListItem style={{}} key={id} component="div" disablePadding>
@@ -46,9 +33,6 @@ export const Players = () => {
           )
 
         })}
-        <Pagination count={meta?.total_pages} showFirstButton showLastButton onChange={() => meta?.current_page + 1
-        } />
-
       </ul>
     </div>
   )

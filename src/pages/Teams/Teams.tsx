@@ -1,11 +1,12 @@
 //TODO ajustar pathbase
 import { CircularProgress, Backdrop, ListItem, ListItemText } from '@mui/material'
 
-import { useGames } from '../../hooks/useGames/useGames';
+import { useTeams } from '../../hooks/useTeams/useTeams';
 
-export const Games = () => {
-  const { data, isLoading } = useGames()
-    
+export const Teams = () => {
+
+  const { data, isLoading } = useTeams() 
+
   if (isLoading) {
     return (
       <Backdrop
@@ -21,12 +22,12 @@ export const Games = () => {
     <div style={{ display: 'flex' }}>
 
       <ul style={{ display: 'flex', flexDirection: 'column' }}>
-        {data?.data?.map((game, id) => {
+        {data?.data?.map((team, id) => {
           return (
             <>
               <ListItem style={{}} key={id} component="div" disablePadding>
 
-                <ListItemText primary={`${game.status}`} />
+                <ListItemText primary={`${team.full_name}`} />
               </ListItem>
             </>
           )
