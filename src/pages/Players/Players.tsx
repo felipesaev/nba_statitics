@@ -1,12 +1,20 @@
 //TODO ajustar pathbase
-import { CircularProgress, Backdrop, ListItem, ListItemText, Card, CardMedia, CardHeader, Avatar, Grid, Badge } from '@mui/material'
+import { useEffect, useState } from 'react';
+import { CircularProgress, Backdrop, Card, CardHeader, Avatar, Grid, Badge } from '@mui/material'
 
 import { usePlayers } from '../../hooks/usePlayers/usePlayers';
+import { InputSearch } from '../../components/Input';
 
 export const Players = () => {
+  const [players, setPlayers] = useState([]);
+  const [keyword, setKeyword] = useState('');
+  const { data, isLoading } = usePlayers();
 
-  const { data, isLoading } = usePlayers()
 
+  useEffect(() => {
+    setPlayers(data.data)
+  }, [data])
+  
   if (isLoading) {
     return (
       <Backdrop
@@ -17,30 +25,46 @@ export const Players = () => {
       </Backdrop>
     )
   }
+
+  const updateKeyword = (keyword: string) => {
+    const filtered = data?.data.filter(player => {
+      return `${player.first_name} ${player.last_name}`.toLowerCase().includes(keyword.toLowerCase())
+      
+    })
+
+    setKeyword(keyword);
+    setPlayers(filtered)
+ }
+
   return (
 
+    <>
 
-    <Grid container rowSpacing={{ xs: 1, sm: 2, md: 3 }} columnSpacing={{ xs: 1, sm: 2, md: 3}}>
-      {data?.data?.map((players, id) => {
-        return (
-          <>
-            <Grid item xs={8} sm={6} md={4} key={id}>
-              <Card >
-                <CardHeader avatar={
-                  <Badge badgeContent={players.position} color="primary">
-                    <Avatar sx={{ bgolor: '#666' }} aria-label="recipe">
-                      {players.first_name.split('')[0]}
-                    </Avatar>
-                  </Badge>
-                } title={`${players.first_name} ${players.last_name}`} subheader={players.team.full_name} />
+      <Grid container rowSpacing={{ xs: 1, sm: 2, md: 3 }} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+        <Grid item xs={12} >
+          <InputSearch keyword={keyword} onChange={updateKeyword} label='Busque o jogador' />
+        </Grid>
+        {players.map((players, id) => {
+          return (
+            <>
+              <Grid item xs={8} sm={6} md={4} key={id}>
+                <Card >
+                  <CardHeader avatar={
+                    <Badge badgeContent={players.position} color="primary">
+                      <Avatar sx={{ bgolor: '#666' }} aria-label="recipe">
+                        {players.first_name.split('')[0]}
+                      </Avatar>
+                    </Badge>
+                  } title={`${players.first_name} ${players.last_name}`} subheader={players.team.full_name} />
 
-              </Card>
+                </Card>
 
-            </Grid>
-          </>
-        )
+              </Grid>
+            </>
+          )
 
-      })}
-    </Grid>
+        })}
+      </Grid>
+    </>
   )
 }
