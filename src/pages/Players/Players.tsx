@@ -1,11 +1,11 @@
 //TODO ajustar pathbase
-import { CircularProgress, Backdrop, ListItem, ListItemText } from '@mui/material'
+import { CircularProgress, Backdrop, ListItem, ListItemText, Card, CardMedia, CardHeader, Avatar, Grid, Badge } from '@mui/material'
 
 import { usePlayers } from '../../hooks/usePlayers/usePlayers';
 
 export const Players = () => {
 
-  const { data, isLoading } = usePlayers() 
+  const { data, isLoading } = usePlayers()
 
   if (isLoading) {
     return (
@@ -19,21 +19,28 @@ export const Players = () => {
   }
   return (
 
-    <div style={{ display: 'flex' }}>
 
-      <ul style={{ display: 'flex', flexDirection: 'column' }}>
-        {data?.data?.map((players, id) => {
-          return (
-            <>
-              <ListItem style={{}} key={id} component="div" disablePadding>
+    <Grid container rowSpacing={{ xs: 1, sm: 2, md: 3 }} columnSpacing={{ xs: 1, sm: 2, md: 3}}>
+      {data?.data?.map((players, id) => {
+        return (
+          <>
+            <Grid item xs={8} sm={6} md={4} key={id}>
+              <Card >
+                <CardHeader avatar={
+                  <Badge badgeContent={players.position} color="primary">
+                    <Avatar sx={{ bgolor: '#666' }} aria-label="recipe">
+                      {players.first_name.split('')[0]}
+                    </Avatar>
+                  </Badge>
+                } title={`${players.first_name} ${players.last_name}`} subheader={players.team.full_name} />
 
-                <ListItemText primary={`${players.first_name} ${players.last_name}`} />
-              </ListItem>
-            </>
-          )
+              </Card>
 
-        })}
-      </ul>
-    </div>
+            </Grid>
+          </>
+        )
+
+      })}
+    </Grid>
   )
 }
