@@ -10,7 +10,6 @@ export const Players = () => {
   const [keyword, setKeyword] = useState('');
   const { data, isLoading } = usePlayers();
 
-
   useEffect(() => {
     setPlayers(data.data)
   }, [data])
@@ -28,37 +27,31 @@ export const Players = () => {
 
   const updateKeyword = (keyword: string) => {
     const filtered = data?.data.filter(player => {
-      return `${player.first_name} ${player.last_name}`.toLowerCase().includes(keyword.toLowerCase())
-      
+      return `${player.first_name} ${player.last_name}`.toLowerCase().includes(keyword.toLowerCase())      
     })
-
     setKeyword(keyword);
     setPlayers(filtered)
  }
 
   return (
-
     <>
-
       <Grid container rowSpacing={{ xs: 1, sm: 2, md: 3 }} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
         <Grid item xs={12} >
           <InputSearch keyword={keyword} onChange={updateKeyword} label='Busque o jogador' />
         </Grid>
-        {players.map((players, id) => {
+        {players.map((player, id) => {
           return (
             <>
               <Grid item xs={8} sm={6} md={4} key={id}>
                 <Card >
                   <CardHeader avatar={
-                    <Badge badgeContent={players.position} color="primary">
+                    <Badge badgeContent={player.position} color="primary">
                       <Avatar sx={{ bgolor: '#666' }} aria-label="recipe">
-                        {players.first_name.split('')[0]}
+                        {player.first_name.split('')[0]}
                       </Avatar>
                     </Badge>
-                  } title={`${players.first_name} ${players.last_name}`} subheader={players.team.full_name} />
-
+                  } title={`${player.first_name} ${player.last_name}`} subheader={player.team.full_name} />
                 </Card>
-
               </Grid>
             </>
           )
