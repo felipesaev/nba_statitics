@@ -6,14 +6,22 @@ import { Players } from './pages/Players/Players'
 import { Divider } from '@mui/material'
 import { Games } from './pages/Games/Games'
 import { Teams } from './pages/Teams/Teams'
+import App from './App'
+import { Disclosure } from '@headlessui/react'
+import { MenuOptions } from './components/Menu/Menu'
 
 const AppRouter = () => {
   return (
     <Router>
-      <div style={{ display: 'flex' }}>
 
-        <Sidebar />
-        <Divider orientation={'vertical'} style={{ height: '100vh', marginRight: '68px' }} />
+      <Disclosure as="nav" className="bg-gray-800">
+        {({ open }) => (
+          <>
+            <MenuOptions open={open} />
+          </>
+        )}
+      </Disclosure>
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/players" element={<Players />} />
@@ -21,6 +29,7 @@ const AppRouter = () => {
           <Route path="/teams" element={<Teams />} />
         </Routes>
       </div>
+
     </Router>
   )
 }

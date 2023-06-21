@@ -1,14 +1,16 @@
-import Sidebar from "./components/Sidebar/Sidebar"
-import { Players } from "./pages/Players/Players"
+import { Disclosure } from '@headlessui/react'
 
-function App() {
+import { MenuOptions } from './components/Menu/Menu'
 
+
+export default function App() {
   return (
-    <div style={{ display: 'flex' }}>
-      <Sidebar />
-      <Players />
-    </div>
+    <>      
+      <div className="min-h-full">
+        
+
+        
+      </div>
+    </>
   )
 }
-
-export default App
