@@ -2,10 +2,35 @@
 import { CircularProgress, Backdrop, ListItem, ListItemText } from '@mui/material'
 
 import { useTeams } from '../../hooks/useTeams/useTeams';
+import { useEffect, useState } from 'react';
+import { InputSearch } from '../../components/Input';
 
 export const Teams = () => {
 
-  const { data, isLoading } = useTeams() 
+  const { data, isLoading } = useTeams();
+
+
+  const [keyword, setKeyword] = useState('');
+  const [teams, setTeams] = useState([]);
+
+  useEffect(() => {
+
+    if (data) {
+      setTeams(data.sports[0].leagues[0].teams)
+    }
+
+  }, [data])
+
+
+  const updateKeyword = (keyword: string) => {
+
+    const filtered = data.sports[0].leagues[0].teams.filter(team => {
+      return team.team.location.toUpperCase().includes(keyword.toUpperCase())
+    })
+    setKeyword(keyword);
+    setTeams(filtered);
+
+  }
 
   if (isLoading) {
     return (
@@ -20,14 +45,14 @@ export const Teams = () => {
   return (
 
     <div style={{ display: 'flex' }}>
-
+      <InputSearch keyword={keyword} onChange={updateKeyword} placeholder='Busque o time' />
       <ul style={{ display: 'flex', flexDirection: 'column' }}>
-        {data?.data?.map((team, id) => {
+        {teams.map((team, id) => {
           return (
             <>
               <ListItem style={{}} key={id} component="div" disablePadding>
 
-                <ListItemText primary={`${team.full_name}`} />
+                <ListItemText primary={team.team.displayName} />
               </ListItem>
             </>
           )

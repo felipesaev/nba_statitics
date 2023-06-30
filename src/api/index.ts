@@ -1,6 +1,7 @@
 import axios from "axios";
 
 const baseURL = "https://www.balldontlie.io/api/v1";
+const baseESPN = "http://site.api.espn.com/apis/site/v2/sports/basketball/nba"
 
 export const fetchPlayers = async () => {
     const { data } = await axios.get(`${baseURL}/players`)
@@ -13,7 +14,7 @@ export const fetchGames = async () => {
 }
 
 export const fetchTeams = async () => {
-    const { data } = await axios.get(`${baseURL}/teams`);
+    const { data } = await axios.get(`${baseESPN}/teams`);
     return data
 }
 
