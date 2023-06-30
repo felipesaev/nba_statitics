@@ -43,22 +43,26 @@ export const Teams = () => {
     )
   }
   return (
-
-    <div style={{ display: 'flex' }}>
+    <>
       <InputSearch keyword={keyword} onChange={updateKeyword} placeholder='Busque o time' />
-      <ul style={{ display: 'flex', flexDirection: 'column' }}>
+      <div className="grid sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-3 sm:gap-4 md:gap-3 lg:gap-1 grid-rows-3">
+
         {teams.map((team, id) => {
+          const logo = team.team.logos[0].href
           return (
-            <>
-              <ListItem style={{}} key={id} component="div" disablePadding>
+            <div key={id} className="rounded overflow-hidden shadow-lg">
 
-                <ListItemText primary={team.team.displayName} />
-              </ListItem>
-            </>
+              <div className="px-6 py-4">
+                <div className="font-bold text-xl mb-2">{team.team.displayName}</div>
+                <span className="text-gray-700 text-sm">Cidade: {team.team.location}</span>
+
+                <img src={logo} width={40} height={40} alt="Sunset in the mountains" />
+              </div>
+
+            </div>
           )
-
         })}
-      </ul>
-    </div>
+      </div>
+    </>
   )
 }
