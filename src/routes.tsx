@@ -14,7 +14,7 @@ const AppRouter = () => {
   return (
     <Router>
 
-      <Disclosure as="nav" className="bg-gray-800">
+      <Disclosure as="nav" className="bg-gray-800 mb-12">
         {({ open }) => (
           <>
             <MenuOptions open={open} />

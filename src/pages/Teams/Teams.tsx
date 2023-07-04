@@ -1,8 +1,8 @@
 //TODO ajustar pathbase
+import { useEffect, useState } from 'react';
 import { CircularProgress, Backdrop, ListItem, ListItemText } from '@mui/material'
 
 import { useTeams } from '../../hooks/useTeams/useTeams';
-import { useEffect, useState } from 'react';
 import { InputSearch } from '../../components/Input';
 
 export const Teams = () => {
@@ -36,8 +36,7 @@ export const Teams = () => {
     return (
       <Backdrop
         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={isLoading}
-      >
+        open={isLoading}>
         <CircularProgress color="inherit" />
       </Backdrop>
     )
@@ -45,23 +44,29 @@ export const Teams = () => {
   return (
     <>
       <InputSearch keyword={keyword} onChange={updateKeyword} placeholder='Busque o time' />
-      <div className="grid sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-3 sm:gap-4 md:gap-3 lg:gap-1 grid-rows-3">
+      <div className="grid sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-3 sm:gap-4 md:gap-3 lg:gap-1 grid-rows-3 mt-12">
 
-        {teams.map((team, id) => {
-          const logo = team.team.logos[0].href
-          return (
-            <div key={id} className="rounded overflow-hidden shadow-lg">
+        {
+          teams.length > 0 ? (
+            teams.map((team, id) => {
+              const logo = team.team.logos[0].href
+              return (
 
-              <div className="px-6 py-4">
-                <div className="font-bold text-xl mb-2">{team.team.displayName}</div>
-                <span className="text-gray-700 text-sm">Cidade: {team.team.location}</span>
+                <div key={id} className="card card-side bg-base-100 shadow-xl">
+                  <figure><img style={{ width: '86px' }} src={logo} alt="Teams" /></figure>
+                  <div className="card-body">
+                    <h2 className="card-title">{team.team.displayName}</h2>
+                    <p>{team.team.location}</p>
+                    <div className="card-actions justify-end">
+                      <button className="btn btn-xs btn-secundary"><a href={team.team.links[0].href} target='_blank'>Noticias</a></button>
+                    </div>
+                  </div>
+                </div>
+              )
+            })
 
-                <img src={logo} width={40} height={40} alt="Sunset in the mountains" />
-              </div>
-
-            </div>
-          )
-        })}
+          ) : 'Nao encontramos o time'
+        }
       </div>
     </>
   )
